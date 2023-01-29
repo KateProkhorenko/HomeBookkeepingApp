@@ -1,0 +1,43 @@
+﻿@page "/statistics"
+@model HomeBookkeepingApp.Pages.StatisticsModel
+
+
+<div class="m-2">
+    <h4 class="bg-success text-white text-center p-2">Statistics</h4>
+    <table class="table table-sm table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>DateConsumption</th>
+                <th>Category</th>
+                <th>Sum</th>
+                <th>Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Consumption c in Model.Consumptions)
+            {
+                <tr class="@Model.GetClass(c.Category?.CategoryName)">
+                    <td>@c.DateConsumption</td>
+                    <td>@c.Category?.CategoryName</td>
+                    <td>@c.Sum</td>
+                    <td>@c.Comment</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <form asp-page="Statistics" method="get">
+    <div class="form-group">
+            <label for="selectedCategory">Category</label>
+            <select name="selectedCategory" class="form-control">
+                <option disabled selected>Select Category</option>
+            @foreach (string category in Model.Categories) {
+                    <option selected="@(category == Model.SelectedCategory)">
+                        @category
+                </option>
+            }
+        </select>
+    </div>
+    <button class="btn btn-primary mt-2" type="submit">Select</button>
+    </form>
+    
+</div>
